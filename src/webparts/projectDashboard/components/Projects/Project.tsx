@@ -7,11 +7,22 @@ import {
   SPHttpClientResponse,
   ISPHttpClientOptions,
 } from "@microsoft/sp-http";
+// import {
+//   DocumentCard,
+//   DocumentCardDetails,
+//   DocumentCardTitle,
+// } from "office-ui-fabric-react/lib/DocumentCard";
+import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import {
   DocumentCard,
-  DocumentCardDetails,
+  DocumentCardActivity,
+  DocumentCardPreview,
   DocumentCardTitle,
-} from "office-ui-fabric-react/lib/DocumentCard";
+  DocumentCardDetails,
+  IDocumentCardPreviewProps,
+} from "@fluentui/react/lib/DocumentCard";
+import { ImageFit } from "@fluentui/react/lib/Image";
+
 // export interface IProjectsProps {}
 
 // export interface IProjectsState {}
@@ -27,6 +38,7 @@ export default class Projects extends React.Component<
       items: [],
     };
   }
+
   public getItems(filterVal) {
     //   this.context.httpClient.get("https://your-web-api", HttpClient.configurations.v1)
     //   .then((data: HttpClientResponse) => data.json())
@@ -103,28 +115,53 @@ export default class Projects extends React.Component<
     return (
       <div>
         <div>
-          <button onClick={() => this.progFilter(allPrj)}>All</button>
-          <button onClick={() => this.progFilter(inProg)}>In Progress</button>
-          <button onClick={() => this.progFilter(comp)}>Completed</button>
-          <button onClick={() => this.progFilter(onHold)}>On Hold</button>
-          <button onClick={() => this.progFilter(notStarted)}>
-            Not Started
-          </button>
+          <PrimaryButton
+            text="All"
+            onClick={() => this.progFilter(allPrj)}
+            allowDisabledFocus
+          />
+          <PrimaryButton
+            text="In Progress"
+            onClick={() => this.progFilter(inProg)}
+            allowDisabledFocus
+          />
+          <PrimaryButton
+            text="Completed"
+            onClick={() => this.progFilter(comp)}
+            allowDisabledFocus
+          />
+          <PrimaryButton
+            text="On Hold"
+            onClick={() => this.progFilter(onHold)}
+            allowDisabledFocus
+          />
+          <PrimaryButton
+            text=" Not Started"
+            onClick={() => this.progFilter(notStarted)}
+            allowDisabledFocus
+          />
         </div>
         {this.state.items.map((item, key) => (
           <DocumentCard>
+            {/* <a href={_projDocLink + item.Title} target="_blank">
+              <DocumentCardTitle title={item.Title}></DocumentCardTitle>
+            </a> */}
+            {/* <DocumentCardTitle title={item.Title}></DocumentCardTitle> */}
             <a href={_projDocLink + item.Title} target="_blank">
               <DocumentCardTitle title={item.Title}></DocumentCardTitle>
             </a>
-            {/* <DocumentCardTitle title={item.Title}></DocumentCardTitle> */}
-            <DocumentCardDetails>
-              <p>
-                <a href={"mailto:" + item.ProjectManager.EMail}>
-                  {item.ProjectManager.Title}
-                </a>
-              </p>
-              <p>{item.Status}</p>
-            </DocumentCardDetails>
+
+            <a href={"mailto:" + item.ProjectManager.EMail}>
+              <DocumentCardTitle
+                title={item.ProjectManager.Title}
+                showAsSecondaryTitle
+              ></DocumentCardTitle>
+            </a>
+
+            <DocumentCardTitle
+              title={item.Status}
+              showAsSecondaryTitle
+            ></DocumentCardTitle>
           </DocumentCard>
         ))}
       </div>
